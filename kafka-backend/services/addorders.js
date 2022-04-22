@@ -22,15 +22,23 @@ async function handle_request(msg, callback){
             totalprice
         })
         await order.save();
-        orderdetails.forEach(async (order) =>
+        await orderdetails.forEach( async (order) =>
         {   try{
             let stock=0;
             let salescount=0;
-            let products= await product.find({ _id: order.product });
+            let products=  await product.find({ _id: order.product });
             console.log(products);
-            stock = await ((products[0].stock)-(order.quantity));
-            salescount = await ((products[0].salescount) + (order.quantity));
-            let result = await product.findOneAndUpdate({_id:order.product},{stock:stock,salescount:salescount},{upsert :true, new: true});
+            stock = ((products[0].stock)-(order.quantity));
+            console.log(stock)
+            if(products[0].salescount)
+            {
+            salescount =  ((products[0].salescount) + (order.quantity));
+            }
+            else{
+                salescount =  order.quantity
+            }
+            console.log(salescount)
+            let result = await  product.findOneAndUpdate({_id:order.product},{stock:stock,salescount:salescount},{upsert :true, new: true});
         }
         catch(err){
             response.status = 500;

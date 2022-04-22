@@ -7,35 +7,26 @@ const product = require("../models/productModel");
 connectDB();
 
 async function handle_request(msg, callback){
+    let response ={};
     const {shopname} = msg;
     try {
     let shopname1 = await product.find({ shopname });
     console.log(shopname1);
     if (shopname1.length === 0 ) {
-        let newshop = await User.find({ shopname });
-            if(newshop.length !== 0){
+        let results = await User.find({ shopname });
+            if(results.length !== 0){
                 response.status = 200;
                     response.message = 'true';
-                    return callback(null, {success: true,newshop});
+                    return callback(null, {success: true,results});
              }else{
                 response.status = 400;
                     response.message = 'false';
                     return callback(null, response);
              }
 }else {
-    let query = [
-        {
-            $lookup:
-            {
-                from:"products",
-                localField: "shopname",
-                foreignField : "shopname",
-                as: "shopdetails"
-            }
-        },
-        {$unwind: '$shopdetails'},
-    ];
-    let results = await User.aggregate(query);
+
+    let shopdetails = await product.find({ shopname });
+    let results = await User.find({ shopname });
    let results1 = await Order.aggregate([
     {
        $match :
@@ -72,7 +63,7 @@ await results1.forEach( (order) =>
     console.log(totalsalesrevenue); 
     //console.log(results1); && results1.length !== 0
       if(results.length !== 0){
-        return callback(null,{success: true,results,totalsalesrevenue});
+        return callback(null,{success: true,shopdetails,results,totalsalesrevenue});
        }else{
         response.status = 400;
         response.message = 'false';
