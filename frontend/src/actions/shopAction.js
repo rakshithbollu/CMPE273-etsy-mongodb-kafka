@@ -89,6 +89,7 @@ export const getShopAvailability =
         
         type: SHOP_DETAILS_SUCCESS,
         payload: data.results,
+        payload2 :data.shopdetails,
         payload1: data.totalsalesrevenue, 
       });
     } catch (error) {

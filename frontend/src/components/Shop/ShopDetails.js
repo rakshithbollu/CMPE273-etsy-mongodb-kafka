@@ -31,7 +31,7 @@ const ShopDetails = ({ history }) => {
   const [newcategory,setNewcategory]=useState('');
   const {categories} = useSelector((state)=>state.categorydetails)
       let { shopname } = useParams();
-      const{loading,shopdetails,shopsalesrevenue} = useSelector((state)=>state.shopdetail);
+      const{loading,shopdetails,usershopdetails,shopsalesrevenue} = useSelector((state)=>state.shopdetail);
       const{user} =useSelector((state) =>state.auth);
       const email =user && user.length && user[0].email;
       useEffect(() => {
@@ -109,14 +109,14 @@ const ShopDetails = ({ history }) => {
     
 
           <><Fragment>
-        {shopdetails && shopdetails.length && user && user.length &&
+        {usershopdetails && usershopdetails.length && user && user.length &&
         <><div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
             <div class="card p-4">
               <div class=" image d-flex flex-column justify-content-center align-items-center">
               <button class="btn btn-secondary"> <Image
               style={{ height: 100, width: 100, marginBottom: 20 }}
               cloudName='dj3in4dua'
-              public_id={shopdetails[0].shopimage} />
+              public_id={usershopdetails[0].shopimage} />
               </button>
               <p><b>Edit shop image below:</b></p>
               {shopname === user[0].shopname ? 
@@ -126,7 +126,7 @@ const ShopDetails = ({ history }) => {
                         name='userName'
                         onChange={(e) => uploadShopImage(e)}
                       ></input> :''}
-                      <span class="name mt-3">shopname: {user[0].shopname}</span> <span class="idd">owner: {shopdetails[0].name}</span><span class="idd">{shopdetails[0].email}</span>
+                      <span class="name mt-3">shopname: {user[0].shopname}</span> <span class="idd">owner: {usershopdetails[0].name}</span><span class="idd">{usershopdetails[0].email}</span>
          <div class=" d-flex mt-2"> 
                 {shopname === user[0].shopname ?
                 <Button variant="primary" style={{backgroundColor:"black"}} onClick={handleShow}>Create New Product
@@ -140,8 +140,7 @@ const ShopDetails = ({ history }) => {
                 <div style={{"display":"flex","alignItems":"center","justifyContent":"center"}}>
 
                   {shopname === user[0].shopname ? <h6>Total Sales Income from my shop:</h6> : ''}
-                  {shopsalesrevenue
-                    && shopsalesrevenue.length && shopname === user[0].shopname ? <h6>{shopsalesrevenue[0].totalsalesrevenue}</h6> : 0}
+                  {shopsalesrevenue && shopname === user[0].shopname ? <h6>{shopsalesrevenue}</h6>:''}
 
                 </div>
                 <div style={{"display":"flex","alignItems":"center","justifyContent":"center"}}>

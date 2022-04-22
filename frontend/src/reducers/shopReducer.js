@@ -85,7 +85,7 @@ export const createshopReducer = (state = {}, action) => {
   }
 };
 
-export const shopDetailsReducer = (state = { shopdetails: [], shopsalesrevenue :[],shopimagestatus:[] }, action) => {
+export const shopDetailsReducer = (state = { usershopdetails :[],shopdetails: [], shopsalesrevenue :[],shopimagestatus:[] }, action) => {
   switch (action.type) {
     case SHOP_DETAILS_REQUEST:
       return {
@@ -95,7 +95,8 @@ export const shopDetailsReducer = (state = { shopdetails: [], shopsalesrevenue :
     case SHOP_DETAILS_SUCCESS:
       return {
         loading: false,
-        shopdetails: action.payload,
+        usershopdetails: action.payload,
+        shopdetails : action.payload2,
         shopsalesrevenue: action.payload1
       };
     case SHOP_DETAILS_FAIL:

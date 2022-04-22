@@ -127,21 +127,21 @@ const ShopProduct= ({shopproduct,history,shopname}) => {
     return (
       <Fragment>
       {shopproduct && shopproduct.shopname && 
-      <div className = "productCard" onClick={()=> shopproducts(shopproduct.shopdetails._id)}> 
+      <div className = "productCard" onClick={()=> shopproducts(shopproduct._id)}> 
       {user && user.length && user[0].shopname === shopname ?
            (
               <DeleteIcon style={{"width":"20px",height:"30px","color":"tomato"}} onClick={(e) =>
-                deleteProductHandler(e,shopproduct.shopdetails._id,shopname)
+                deleteProductHandler(e,shopproduct._id,shopname)
               } />
             ) : ''}
       {user && user.length && user[0].shopname === shopname ?
-      ( <EditIcon style={{"width":"20px","color":"tomato"}} onClick={(e)=> handleShow(e, shopproduct.shopdetails)}/> ) :''}
+      ( <EditIcon style={{"width":"20px","color":"tomato"}} onClick={(e)=> handleShow(e, shopproduct)}/> ) :''}
             
         <p>{shopname}</p>
-        <img src={shopproduct.shopdetails.image_URL} alt={shopproduct.shopdetails.productname} />
-      <p>{shopproduct.shopdetails.productname}</p>
-      <span>{shopproduct.shopdetails.currency} {shopproduct.shopdetails.price}</span>
-      {shopproduct.shopdetails.salescount ? <span><i>total sales count:</i> {shopproduct.shopdetails.salescount}</span> :
+        <img src={shopproduct.image_URL} alt={shopproduct.productname} />
+      <p>{shopproduct.productname}</p>
+      <span>{shopproduct.currency} {shopproduct.price}</span>
+      {shopproduct.salescount ? <span><i>total sales count:</i> {shopproduct.salescount}</span> :
       <span><i>total sales count: </i>0</span>}
         </div>
           }
@@ -219,7 +219,7 @@ const ShopProduct= ({shopproduct,history,shopname}) => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={(e)=>updateProductSubmit(e,shopproduct.shopdetails._id).then(handleClose)}>
+            <Button variant="primary" onClick={(e)=>updateProductSubmit(e,shopproduct._id).then(handleClose)}>
               Save Changes
             </Button>
           </Modal.Footer>
