@@ -34,7 +34,7 @@ const UserSchema = new mongoose.Schema({
   },
   shopname: {
     type: String,
-    unique :true,
+   
   },
   shopimage: {
     type: String,
