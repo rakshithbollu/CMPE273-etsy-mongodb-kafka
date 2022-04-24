@@ -28,47 +28,12 @@ connectDB();
 //router.get('/',(req,res) => res.send('User Route'));
 
 
-var connection = mysql.createConnection({
-    host: 'localhost',
-    database: 'users_schema',
-    port: '3306',
-    user: 'root',
-    password: 'Git@m123'
-});
 
-
-connection.connect((err) => {
-    if(err){
-        throw 'Error occured ' + err;
-    }
-    console.log("pool created");
-});
 
 
 //For route use  GET api/profile
 
-router.post('/me',(req,res) => {
-    console.log("hi");
-console.log(req.body);
-const {email} = req.body;
- console.log(email);
-try{  
-    connection.query(`SELECT * FROM users WHERE email=?`,email,  
-    function(error,results){
-    console.log(results);
-    if(results.length !== 0){
-        res.send(JSON.stringify(results));
-     }else{
-        res.send("failure");
-     }
- });
-}
-catch(err){
-    console.error(err.message);
-    res.send("server error");
-}
-}
-);
+
 
 router.post('/changeprofile'
   , async (req,res) => {
@@ -229,7 +194,7 @@ router.post('/getCartDetails'
     kafka.make_request('getcartitems',req.body, function(err,results){
         console.log(results);
               if(err){
-                res.status(results.status).json(results.message);
+                res.status(500).json(err);
                  }
                  
                  else{

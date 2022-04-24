@@ -25,20 +25,6 @@ var Category=require('../../models/Category');
 //router.get('/',(req,res) => res.send('User Route'));
 
 
-var connection = mysql.createConnection({
-    host: 'localhost',
-    database: 'users_schema',
-    port: '3306',
-    user: 'root',
-    password: 'Git@m123'
-});
-
-connection.connect((err) => {
-    if(err){
-        throw 'Error occured ' + err;
-    }
-    console.log("pool created");
-});
 
 
 router.post('/uniqueshopname', [
