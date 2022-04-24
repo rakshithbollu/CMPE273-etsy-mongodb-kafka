@@ -52,25 +52,19 @@ router.post('/uniqueshopname', [
       return res.status(500).json({errors: errors.array()});
       }
       const {shopname} = req.body;
-      try{ 
-        let shopunique = await User.find({ shopname });
-              if(shopunique.length !== 0){
-                res.status(200).json({success: false,shopunique});
-                
-                       }      
-              else{
-                
-                res.status(200).json({success: true});
-                  //console.log("Restaurant already existed!");
-              }
-          
-      }
-      catch(err){
-          console.error(err.message);
-          res.send("server error");
-      }
-  }
-  );
+      kafka.make_request('shopnameunique',req.body, function(err,results){
+        // console.log(results);
+               if(results.status === 200 ){
+                 res.status(results.status).json(results.message);
+                  }
+                  
+                  else{
+                     res.status(500).json(results.message);
+                  }
+              }); 
+ 
+   }
+   );
 
   router.post('/createshop', [
     check('shopname', 'shop name is required').not().isEmpty(),
@@ -210,46 +204,36 @@ router.post('/saveshopimage', [
 ], async (req,res) => {
     console.log(req.body);
     const {shopname} = req.body;
-    try{  
-        let results = await Category.find({ $or :[{shopname:shopname} , {shopname : "NULL"}] })
-                  if(!results){
-  
-                         //res.send(error.code);
-                         res.status(400).json({success: false});
-                     }else{
-                         //res.end(JSON.stringify(results));
-                         res.status(200).json({success: true,results});
-                     }
+    kafka.make_request('getshopcategories',req.body, function(err,results){
+      // console.log(results);
+             if(results.status === 500 || results.status === 400){
+               res.status(results.status).json(results.message);
+                }
                 
-            }      
-    catch(err){
-        console.error(err.message);
-        res.send("database error");
-    }
-}
-);
+                else{
+                   res.status(results.status).json(results.message);
+               }
+            }); 
+
+ }
+ );
 
 router.post('/shopcategory', [
     
 ], async (req,res) => {
     console.log(req.body);
     const {shopname,category} = req.body;
-    try{  
-        
-        let categories =[]
-        categories = new Category({
-            shopname,
-            category,
-          });
-    
-          await categories.save();
-                         //res.end(JSON.stringify(results));
-                         res.status(200).json({success: true});
-            }      
-    catch(err){
-        console.error(err.message);
-        res.send("database error");
-    }
-}
-);
+    kafka.make_request('addshopcategory',req.body, function(err,results){
+        // console.log(results);
+               if(results.status === 500 ){
+                 res.status(results.status).json(results.message);
+                  }
+                  
+                  else{
+                     res.status(results.status).json(results.message);
+                 }
+              }); 
+ 
+   }
+   );
   module.exports = router;

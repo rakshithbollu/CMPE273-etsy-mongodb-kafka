@@ -95,52 +95,38 @@ router.post('/addgiftoption'
     console.log(req.body);
     const {email,product,giftoption} = req.body;
     //{$set:{item_name:item_name,foodtype:foodtype,price:price}},{new: true}
-    try{  
-        
-         let result = await Cart.findOneAndUpdate({email:email, product : product},req.body,{upsert :true, new: true})
-         console.log(result)
-         if (result)
-         {
-            res.status(200).json({
-                success: true
-              })
-         }
-         else{
-             res.send('failure')
-         }
-    }
-    catch(err){
-        console.error(err.message);
-        res.send("server error");
-    }
-}
-);
+    kafka.make_request('addgiftop',req.body, function(err,results){
+        // console.log(results);
+               if(results.status === 400 || results.status === 500 ){
+                 res.status(results.status).json(results.message);
+                  }
+                  
+                  else{
+                     res.status(200).json(results.message);
+                  }
+              }); 
+ 
+   }
+   );
 
 router.post('/addgiftdescription'
   , async (req,res) => {
     console.log(req.body);
     const {email,product,giftdescription} = req.body;
     //{$set:{item_name:item_name,foodtype:foodtype,price:price}},{new: true}
-    try{  
-        
-         let result = await Cart.findOneAndUpdate({email:email, product : product},req.body,{upsert :true, new: true})
-         console.log(result)
-         if (result)
-         {
-            res.status(200).json({
-                success: true
-              })
-         }
-         else{
-             res.send('failure')
-         }
-    }
-    catch(err){
-        console.error(err.message);
-        res.send("server error");
-    }
-}
-);
+    kafka.make_request('addgiftdesc',req.body, function(err,results){
+        // console.log(results);
+               if(results.status === 400 || results.status === 500 ){
+                 res.status(results.status).json(results.message);
+                  }
+                  
+                  else{
+                     res.status(200).json(results.message);
+                  }
+              }); 
+ 
+   }
+   );
 
 //display the product details based on the products given in the search query
 
