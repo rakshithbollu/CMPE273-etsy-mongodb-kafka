@@ -17,9 +17,9 @@
 }
 
 .paginationBox {
-  display: flex;
+
   justify-content: center;
-  margin: 6vmax;
+  margin: 4vmax;
 }
 
 .pagination {
@@ -29,9 +29,9 @@
 }
 
 .page-item {
-  background-color: rgb(255, 255, 255);
+  background-color: peachpuff;
   list-style: none;
-  border: 1px solid rgba(0, 0, 0, 0.178);
+  border: 2px solid rgba(0, 0, 0, 0.178);
   padding: 1vmax 1.5vmax;
   transition: all 0.3s;
   cursor: pointer;
@@ -51,7 +51,7 @@
 }
 
 .page-item:hover {
-  background-color: rgb(230, 230, 230);
+  background-color: palevioletred;
 }
 
 .page-item:hover .page-link {
@@ -59,11 +59,11 @@
 }
 
 .pageItemActive {
-  background-color: tomato;
+  background-color: palegreen;
 }
 
 .pageLinkActive {
-  color: white;
+  color: palegreen;
 }
 
 .filterBox {

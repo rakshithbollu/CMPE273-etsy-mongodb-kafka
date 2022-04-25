@@ -36,21 +36,7 @@ var connection = mysql.createPool({
 });
 */
 
-var connection = mysql.createConnection({
-    host: 'localhost',
-    database: 'users_schema',
-    port: '3306',
-    user: 'root',
-    password: 'Git@m123'
-});
 
-
-connection.connect((err) => {
-    if(err){
-        throw 'Error occured ' + err;
-    }
-    console.log("pool created");
-});
 
 /*
 router.post('/', [
@@ -127,7 +113,7 @@ router.post(
           res.send(results.message);
           }
           else{
-          res.end (results.message);
+          res.send (results.message);
           }
         
     });
